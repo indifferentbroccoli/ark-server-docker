@@ -85,8 +85,19 @@ EOF
 # Install ARK server if it doesn't exist
 if [ ! -f "/home/steam/steamcmd/ark/ShooterGame/Binaries/Linux/ShooterGameServer" ]; then
     echo "Installing ARK server (this may take a while, downloading ~30GB)..."
-    arkmanager install @main
-    echo "ARK server installation completed!"
+    echo "Server will be installed to: /home/steam/steamcmd/ark"
+    
+    # Run install with verbose output
+    arkmanager install @main 2>&1
+    
+    if [ -f "/home/steam/steamcmd/ark/ShooterGame/Binaries/Linux/ShooterGameServer" ]; then
+        echo "ARK server installation completed successfully!"
+    else
+        echo "ERROR: ARK server installation failed - binary not found"
+        echo "Checking directory contents:"
+        ls -la /home/steam/steamcmd/ark/ || echo "Directory does not exist"
+        exit 1
+    fi
 fi
 
 # Install mods if specified
