@@ -1,3 +1,19 @@
+<!-- markdownlint-disable-next-line -->
+![marketing_assets_banner](https://github.com/user-attachments/assets/b8b4ae5c-06bb-46a7-8d94-903a04595036)
+[![GitHub License](https://img.shields.io/github/license/indifferentchicken/ark-server-docker?style=for-the-badge&color=6aa84f)](https://github.com/indifferentchicken/ark-server-docker/blob/main/LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/indifferentchicken/ark-server-docker?style=for-the-badge&color=6aa84f)](https://github.com/indifferentchicken/ark-server-docker/releases)
+[![GitHub Repo stars](https://img.shields.io/github/stars/indifferentchicken/ark-server-docker?style=for-the-badge&color=6aa84f)](https://github.com/indifferentchicken/ark-server-docker)
+[![Discord](https://img.shields.io/discord/798321161082896395?style=for-the-badge&label=Discord&labelColor=5865F2&color=6aa84f)](https://discord.gg/indifferentbroccoli)
+[![Docker Pulls](https://img.shields.io/docker/pulls/indifferentbroccoli/ark-server-docker?style=for-the-badge&color=6aa84f)](https://hub.docker.com/r/indifferentbroccoli/ark-server-docker)
+
+Game server hosting
+
+Fast RAM, high-speed internet
+
+Eat lag for breakfast
+
+[Try our ARK server hosting free for 2 days!](https://indifferentbroccoli.com/ark-server-hosting)
+
 # ARK: Survival Evolved Dedicated Server Docker
 
 A Docker container for running an ARK: Survival Evolved dedicated server using [ARK Server Tools (arkmanager)](https://github.com/arkmanager/ark-server-tools).
