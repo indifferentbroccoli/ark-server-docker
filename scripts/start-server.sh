@@ -16,6 +16,7 @@ arkprecisewarn="false"
 steamcmdroot="/home/steam/steamcmd"
 steamcmdexec="steamcmd.sh"
 steamcmd_user="steam"
+appid="376030"
 
 # Beta branch configuration
 arkbranch="${BETA:-public}"
@@ -123,9 +124,6 @@ arkmanager start --noautoupdate @main
 
 # Monitor the server's status
 while true; do
-    if ! arkmanager status @main > /dev/null 2>&1; then
-        echo "Server stopped unexpectedly, restarting..."
-        arkmanager start --noautoupdate @main
-    fi
+    arkmanager status @main
     sleep 60
 done
