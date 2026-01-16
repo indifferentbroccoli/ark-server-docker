@@ -1,11 +1,8 @@
 ---
 services:
   ark-server:
-    image: indifferentbroccoli/ark-server-docker
+    image: indifferentbroccoli/ark-server-docker:latest
     platform: linux/amd64
-    build:
-      context: .
-      dockerfile: Dockerfile
     restart: unless-stopped
     container_name: ark-server
     stop_grace_period: 30s
