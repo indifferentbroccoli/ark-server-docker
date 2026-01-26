@@ -82,7 +82,7 @@ EOF
 
 # Install ARK server if it doesn't exist
 if [ ! -f "/home/steam/steamcmd/ark/ShooterGame/Binaries/Linux/ShooterGameServer" ]; then
-    echo "Installing ARK server (this may take a while, downloading ~30GB)..."
+    echo "Installing ARK server (this may take a while)..."
     echo "Server will be installed to: /home/steam/steamcmd/ark"
     echo "Beta branch: ${BETA:-public}"
     
@@ -90,6 +90,7 @@ if [ ! -f "/home/steam/steamcmd/ark/ShooterGame/Binaries/Linux/ShooterGameServer
     if [ "${BETA}" = "public" ] || [ -z "${BETA}" ]; then
         arkmanager install @main 2>&1
     else
+        echo "Updating ARK server (this may take a while)..."
         arkmanager install --beta="${BETA}" @main 2>&1
     fi
     
