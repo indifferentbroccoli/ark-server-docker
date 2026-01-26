@@ -1,10 +1,6 @@
 #!/bin/bash
 
 echo "Starting ARK server with arkmanager..."
-echo "Environment variables:"
-echo "  QUERY_PORT=${QUERY_PORT}"
-echo "  SERVER_PORT=${SERVER_PORT}"
-echo "  RCON_PORT=${RCON_PORT}"
 
 # Create arkmanager configuration
 tee /etc/arkmanager/arkmanager.cfg > /dev/null << EOF
@@ -21,9 +17,6 @@ steamcmdroot="/home/steam/steamcmd"
 steamcmdexec="steamcmd.sh"
 steamcmd_user="steam"
 appid="376030"
-
-# Beta branch configuration
-arkbranch="${BETA:-public}"
 
 logdir="/var/log/arktools"
 
@@ -91,9 +84,14 @@ EOF
 if [ ! -f "/home/steam/steamcmd/ark/ShooterGame/Binaries/Linux/ShooterGameServer" ]; then
     echo "Installing ARK server (this may take a while, downloading ~30GB)..."
     echo "Server will be installed to: /home/steam/steamcmd/ark"
+    echo "Beta branch: ${BETA:-public}"
     
-    # Run install with verbose output
-    arkmanager install @main 2>&1
+    # Run install with beta flag
+    if [ "${BETA}" = "public" ] || [ -z "${BETA}" ]; then
+        arkmanager install @main 2>&1
+    else
+        arkmanager install --beta="${BETA}" @main 2>&1
+    fi
     
     if [ -f "/home/steam/steamcmd/ark/ShooterGame/Binaries/Linux/ShooterGameServer" ]; then
         echo "ARK server installation completed successfully!"
@@ -119,7 +117,11 @@ fi
 # Update server if UPDATE_ON_START is set
 if [ "${UPDATE_ON_START}" = "true" ]; then
     echo "Updating ARK server..."
-    arkmanager update --update-mods @main
+    if [ "${BETA}" = "public" ] || [ -z "${BETA}" ]; then
+        arkmanager update --update-mods @main
+    else
+        arkmanager update --beta="${BETA}" --update-mods @main
+    fi
 fi
 
 # Start the server
