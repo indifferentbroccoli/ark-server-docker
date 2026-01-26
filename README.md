@@ -157,8 +157,6 @@ docker exec -u steam ark-server arkmanager status
 # Update server and mods
 docker exec -u steam ark-server arkmanager update --update-mods
 
-# Install a mod
-docker exec -u steam ark-server arkmanager installmod 731604991
 
 # Create a backup
 docker exec -u steam ark-server arkmanager backup
