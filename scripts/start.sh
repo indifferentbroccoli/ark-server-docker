@@ -32,6 +32,7 @@ ark_MaxPlayers="${MAX_PLAYERS:-10}"
 ark_SessionName="${SESSION_NAME:-ARK Server}"
 ark_DifficultyOffset="${DIFFICULTY_OFFSET:-0.2}"
 ark_OverrideOfficialDifficulty="${OVERRIDE_OFFICIAL_DIFFICULTY:-5.0}"
+arkNoPortDecrement="true"
 EOF
 
 # Add PvE flag if enabled

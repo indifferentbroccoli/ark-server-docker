@@ -7,9 +7,13 @@ services:
     container_name: ark-server
     stop_grace_period: 30s
     ports:
-      - 7777:7777/udp
-      - 27015:27015/udp
-      - 27020:27020/tcp
+      - 27960:27960/udp
+      - 27960:27960/tcp
+      - 27961:27961/udp
+      - 27961:27961/tcp
+      - 27962:27962/udp
+      - 27962:27962/tcp
+      - 27963:27963/tcp
     env_file:
       - .env
     volumes:
