@@ -7,8 +7,11 @@ RUN dpkg --add-architecture i386 && \
     lib32gcc-s1 \
     lib32stdc++6 \
     libc6-i386 \
-    perl \
-    perl-modules \
+    perl=5.40.* \
+    perl-modules-5.40 \
+    libcompress-raw-zlib-perl=2.206-* \
+    libcompress-raw-bzip2-perl=2.206-* \
+    libio-compress-perl=2.206-* \
     curl \
     lsof \
     bzip2 \
@@ -17,15 +20,6 @@ RUN dpkg --add-architecture i386 && \
     jq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-# Install Perl compression modules via CPAN
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    build-essential \
-    zlib1g-dev \
-    && cpan -T -i Compress::Raw::Zlib Compress::Raw::Bzip2 IO::Compress::Base \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /root/.cpan
 
 LABEL maintainer="support@indifferentbroccoli.com" \
       name="indifferentbroccoli/ark-server-docker" \
