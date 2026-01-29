@@ -7,6 +7,7 @@ RUN dpkg --add-architecture i386 && \
     lib32gcc-s1 \
     lib32stdc++6 \
     perl-modules \
+    libcompress-raw-zlib-perl \
     curl \
     lsof \
     bzip2 \
