@@ -7,20 +7,28 @@ RUN dpkg --add-architecture i386 && \
     lib32gcc-s1 \
     lib32stdc++6 \
     perl-modules \
-    libcompress-raw-zlib-perl \
-    libio-compress-perl \
-    make \
-    gcc \
     curl \
     lsof \
     bzip2 \
     gettext-base \
     procps \
     jq \
-    && curl -L https://cpanmin.us | perl - App::cpanminus \
-    && cpanm --notest Compress::Raw::Zlib \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Perl modules for compression
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libcompress-raw-zlib-perl \
+    libio-compress-perl \
+    zlib1g-dev \
+    make \
+    gcc \
+    && cpan -T Compress::Raw::Zlib \
+    && apt-get remove -y zlib1g-dev make gcc \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /root/.cpan
 
 LABEL maintainer="support@indifferentbroccoli.com" \
       name="indifferentbroccoli/ark-server-docker" \
