@@ -9,13 +9,15 @@ RUN dpkg --add-architecture i386 && \
     perl-modules \
     libcompress-raw-zlib-perl \
     libio-compress-perl \
-    cpanminus \
+    make \
+    gcc \
     curl \
     lsof \
     bzip2 \
     gettext-base \
     procps \
     jq \
+    && curl -L https://cpanmin.us | perl - App::cpanminus \
     && cpanm --notest Compress::Raw::Zlib \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
