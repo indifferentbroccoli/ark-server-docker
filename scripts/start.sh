@@ -114,6 +114,26 @@ if [ ! -z "$MOD_IDS" ] && [ "$MOD_IDS" != "" ]; then
         echo "Installing mod: $mod"
         arkmanager installmod $mod @main
     done
+    
+    # Add ActiveMods to GameUserSettings.ini
+    GAME_USER_SETTINGS="/home/steam/steamcmd/ark/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini"
+    if [ -f "$GAME_USER_SETTINGS" ]; then
+        # Remove existing ActiveMods line if present
+        sed -i '/^ActiveMods=/d' "$GAME_USER_SETTINGS"
+        
+        # Add ActiveMods line under [ServerSettings] section
+        if grep -q "\[ServerSettings\]" "$GAME_USER_SETTINGS"; then
+            sed -i "/\[ServerSettings\]/a ActiveMods=${MOD_IDS}" "$GAME_USER_SETTINGS"
+            echo "Added ActiveMods=${MOD_IDS} to GameUserSettings.ini"
+        else
+            echo "[ServerSettings]" >> "$GAME_USER_SETTINGS"
+            echo "ActiveMods=${MOD_IDS}" >> "$GAME_USER_SETTINGS"
+            echo "Created [ServerSettings] section and added ActiveMods=${MOD_IDS}"
+        fi
+    else
+        echo "GameUserSettings.ini not found yet, will be created on first server start"
+        echo "You may need to manually add: ActiveMods=${MOD_IDS}"
+    fi
 fi
 
 # Update server if UPDATE_ON_START is set

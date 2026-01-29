@@ -6,6 +6,8 @@ RUN dpkg --add-architecture i386 && \
     apt-get update && apt-get install -y --no-install-recommends \
     lib32gcc-s1 \
     lib32stdc++6 \
+    libc6-i386 \
+    perl \
     perl-modules \
     curl \
     lsof \
@@ -16,17 +18,12 @@ RUN dpkg --add-architecture i386 && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Perl modules for compression
+# Install Perl compression modules via CPAN
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    libcompress-raw-zlib-perl \
-    libio-compress-perl \
+    build-essential \
     zlib1g-dev \
-    make \
-    gcc \
-    && cpan -T Compress::Raw::Zlib \
-    && apt-get remove -y zlib1g-dev make gcc \
-    && apt-get autoremove -y \
+    && cpan -T -i Compress::Raw::Zlib Compress::Raw::Bzip2 IO::Compress::Base \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /root/.cpan
 
