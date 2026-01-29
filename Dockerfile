@@ -8,12 +8,15 @@ RUN dpkg --add-architecture i386 && \
     lib32stdc++6 \
     perl-modules \
     libcompress-raw-zlib-perl \
+    libio-compress-perl \
+    cpanminus \
     curl \
     lsof \
     bzip2 \
     gettext-base \
     procps \
     jq \
+    && cpanm --notest Compress::Raw::Zlib \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
