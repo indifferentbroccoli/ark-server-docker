@@ -4,16 +4,15 @@ FROM --platform=linux/amd64 cm2network/steamcmd:root
 # Install dependencies
 RUN dpkg --add-architecture i386 && \
     apt-get update && apt-get install -y --no-install-recommends \
-    lib32gcc-s1 \
-    lib32stdc++6 \
-    libc6-i386 \
-    perl=5.40.* \
-    perl-modules-5.40 \
-    libcompress-raw-zlib-perl=2.206-* \
-    libcompress-raw-bzip2-perl=2.206-* \
-    libio-compress-perl=2.206-* \
+    perl \
+    perl-modules \
+    libcompress-raw-zlib-perl \
+    libcompress-raw-bzip2-perl \
+    libio-compress-perl \
     curl \
     lsof \
+    libc6-i386 \
+    lib32gcc-s1 \
     bzip2 \
     gettext-base \
     procps \
