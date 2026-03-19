@@ -74,8 +74,6 @@ docker compose logs -f
 | RCON_PORT | 27020 | RCON port |
 | SERVER_PVE | false | Enable PvE mode |
 | BATTLEEYE | false | Enable BattlEye anti-cheat |
-| DIFFICULTY_OFFSET | 0.2 | Difficulty offset (0.0-1.0) |
-| OVERRIDE_OFFICIAL_DIFFICULTY | 5.0 | Override difficulty (affects max dino level) |
 | MOD_IDS | (empty) | Comma-separated mod IDs (e.g., 731604991,893735676) |
 | CLUSTER_ID | (empty) | Cluster ID for server clusters |
 | CLUSTER_DIR_OVERRIDE | (empty) | Custom cluster directory path |
