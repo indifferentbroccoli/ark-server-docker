@@ -116,6 +116,16 @@ if [ ! -z "$MOD_IDS" ] && [ "$MOD_IDS" != "" ]; then
     # Add ActiveMods to GameUserSettings.ini
     GAME_USER_SETTINGS="/home/steam/steamcmd/ark/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini"
     if [ -f "$GAME_USER_SETTINGS" ]; then
+        # ARK server writes GameUserSettings.ini in UTF-16 LE. Convert to UTF-8
+        # before editing so that sed/grep don't see null bytes and corrupt the file.
+        # iconv succeeds on UTF-16 (BOM present) and fails on UTF-8, so this is safe.
+        if iconv -f UTF-16 -t UTF-8 "$GAME_USER_SETTINGS" > "${GAME_USER_SETTINGS}.tmp" 2>/dev/null; then
+            mv "${GAME_USER_SETTINGS}.tmp" "$GAME_USER_SETTINGS"
+            echo "Converted GameUserSettings.ini from UTF-16 to UTF-8"
+        else
+            rm -f "${GAME_USER_SETTINGS}.tmp"
+        fi
+
         # Remove existing ActiveMods line if present
         sed -i '/^ActiveMods=/d' "$GAME_USER_SETTINGS"
         
