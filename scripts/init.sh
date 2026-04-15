@@ -36,6 +36,7 @@ su - steam -c "
     export CLUSTER_DIR_OVERRIDE='${CLUSTER_DIR_OVERRIDE}'
     export MOD_IDS='${MOD_IDS}'
     export ADDITIONAL_ARGS='${ADDITIONAL_ARGS}'
+    export ARKMANAGER_OPTS='${ARKMANAGER_OPTS}'
     export BETA='${BETA}'
     export UPDATE_ON_START='${UPDATE_ON_START}'
     bash /home/steam/scripts/start.sh

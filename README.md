@@ -77,7 +77,8 @@ docker compose logs -f
 | MOD_IDS | (empty) | Comma-separated mod IDs (e.g., 731604991,893735676) |
 | CLUSTER_ID | (empty) | Cluster ID for server clusters |
 | CLUSTER_DIR_OVERRIDE | (empty) | Custom cluster directory path |
-| ADDITIONAL_ARGS | (empty) | Additional command line arguments (e.g., -ServerHardcore -ForceAllowCaveFlyers) |
+| ADDITIONAL_ARGS | (empty) | Additional `-flag` style command line arguments (e.g., -ServerHardcore -ForceAllowCaveFlyers) |
+| ARKMANAGER_OPTS | (empty) | Raw newline-separated `arkmanager.cfg` entries for advanced configuration |
 | BETA | public | Server branch (public, preaquatica, etc.) |
 | UPDATE_ON_START | true | Update server on container start |
 

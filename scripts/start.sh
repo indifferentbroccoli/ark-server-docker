@@ -55,6 +55,12 @@ if [ ! -z "${CLUSTER_DIR_OVERRIDE}" ] && [ "${CLUSTER_DIR_OVERRIDE}" != "" ]; th
     echo "ark_ClusterDirOverride=\"${CLUSTER_DIR_OVERRIDE}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
 fi
 
+# Add mods if specified
+if [ ! -z "${MOD_IDS}" ] && [ "${MOD_IDS}" != "" ]; then
+    echo "arkopt_ActiveMods=\"${MOD_IDS}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+    echo "Mods configured: ${MOD_IDS}"
+fi
+
 # Add additional arguments if set
 if [ ! -z "${ADDITIONAL_ARGS}" ] && [ "${ADDITIONAL_ARGS}" != "" ]; then
     echo "" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
@@ -63,14 +69,19 @@ if [ ! -z "${ADDITIONAL_ARGS}" ] && [ "${ADDITIONAL_ARGS}" != "" ]; then
         if [[ $arg == -* ]]; then
             flag="${arg#-}"
             echo "arkflag_${flag}=true" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
-        elif [[ $arg == \?* ]]; then
-            option="${arg#?}"
-            key="${option%%=*}"
-            value="${option#*=}"
-            echo "ark_${key}=\"${value}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
         fi
     done
     echo "Additional arguments configured: ${ADDITIONAL_ARGS}"
+fi
+
+# Add raw arkmanager.cfg options if specified
+if [ ! -z "${ARKMANAGER_OPTS}" ] && [ "${ARKMANAGER_OPTS}" != "" ]; then
+    echo "" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+    echo "# Custom arkmanager options" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+    while IFS= read -r line; do
+        echo "${line}" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+    done <<< "${ARKMANAGER_OPTS}"
+    echo "Custom arkmanager options configured"
 fi
 
 # Always enable logging
@@ -117,36 +128,6 @@ if [ ! -z "$MOD_IDS" ] && [ "$MOD_IDS" != "" ]; then
         echo "Installing mod: $mod"
         arkmanager installmod $mod @main
     done
-    
-    # Add ActiveMods to GameUserSettings.ini
-    GAME_USER_SETTINGS="/home/steam/steamcmd/ark/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini"
-    if [ -f "$GAME_USER_SETTINGS" ]; then
-        # ARK server writes GameUserSettings.ini in UTF-16 LE. Convert to UTF-8
-        # before editing so that sed/grep don't see null bytes and corrupt the file.
-        # iconv succeeds on UTF-16 (BOM present) and fails on UTF-8, so this is safe.
-        if iconv -f UTF-16 -t UTF-8 "$GAME_USER_SETTINGS" > "${GAME_USER_SETTINGS}.tmp" 2>/dev/null; then
-            mv "${GAME_USER_SETTINGS}.tmp" "$GAME_USER_SETTINGS"
-            echo "Converted GameUserSettings.ini from UTF-16 to UTF-8"
-        else
-            rm -f "${GAME_USER_SETTINGS}.tmp"
-        fi
-
-        # Remove existing ActiveMods line if present
-        sed -i '/^ActiveMods=/d' "$GAME_USER_SETTINGS"
-        
-        # Add ActiveMods line under [ServerSettings] section
-        if grep -q "\[ServerSettings\]" "$GAME_USER_SETTINGS"; then
-            sed -i "/\[ServerSettings\]/a ActiveMods=${MOD_IDS}" "$GAME_USER_SETTINGS"
-            echo "Added ActiveMods=${MOD_IDS} to GameUserSettings.ini"
-        else
-            echo "[ServerSettings]" >> "$GAME_USER_SETTINGS"
-            echo "ActiveMods=${MOD_IDS}" >> "$GAME_USER_SETTINGS"
-            echo "Created [ServerSettings] section and added ActiveMods=${MOD_IDS}"
-        fi
-    else
-        echo "GameUserSettings.ini not found yet, will be created on first server start"
-        echo "You may need to manually add: ActiveMods=${MOD_IDS}"
-    fi
 fi
 
 # Update server if UPDATE_ON_START is set
