@@ -63,6 +63,11 @@ if [ ! -z "${ADDITIONAL_ARGS}" ] && [ "${ADDITIONAL_ARGS}" != "" ]; then
         if [[ $arg == -* ]]; then
             flag="${arg#-}"
             echo "arkflag_${flag}=true" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+        elif [[ $arg == \?* ]]; then
+            option="${arg#?}"
+            key="${option%%=*}"
+            value="${option#*=}"
+            echo "ark_${key}=\"${value}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
         fi
     done
     echo "Additional arguments configured: ${ADDITIONAL_ARGS}"
