@@ -57,7 +57,7 @@ fi
 
 # Add mods if specified
 if [ ! -z "${MOD_IDS}" ] && [ "${MOD_IDS}" != "" ]; then
-    echo "ark_ActiveMods=\"${MOD_IDS}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+    echo "ark_GameModIds=\"${MOD_IDS}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
     echo "Mods configured: ${MOD_IDS}"
 fi
 
