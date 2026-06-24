@@ -47,7 +47,7 @@ fi
 
 # Add cluster configuration if set
 if [ ! -z "${CLUSTER_ID}" ] && [ "${CLUSTER_ID}" != "" ]; then
-    echo "ark_ClusterId=\"${CLUSTER_ID}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+    echo "arkopt_clusterid=\"${CLUSTER_ID}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
     echo "Cluster ID configured: ${CLUSTER_ID}"
 fi
 
