@@ -52,7 +52,7 @@ if [ ! -z "${CLUSTER_ID}" ] && [ "${CLUSTER_ID}" != "" ]; then
 fi
 
 if [ ! -z "${CLUSTER_DIR_OVERRIDE}" ] && [ "${CLUSTER_DIR_OVERRIDE}" != "" ]; then
-    echo "ark_ClusterDirOverride=\"${CLUSTER_DIR_OVERRIDE}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+    echo "arkopt_ClusterDirOverride=\"${CLUSTER_DIR_OVERRIDE}\"" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
 fi
 
 # Add mods if specified
