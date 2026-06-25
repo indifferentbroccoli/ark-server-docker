@@ -35,7 +35,7 @@ EOF
 
 # Add PvE flag if enabled
 if [ "${SERVER_PVE}" = "true" ]; then
-    echo "arkflag_ServerPVE=true" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
+    echo "ark_ServerPVE=true" | tee -a /etc/arkmanager/arkmanager.cfg > /dev/null
 fi
 
 # Add BattlEye configuration
