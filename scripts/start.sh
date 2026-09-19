@@ -121,10 +121,15 @@ fi
 
 # Install mods if specified
 if [ ! -z "$MOD_IDS" ] && [ "$MOD_IDS" != "" ]; then
-    echo "Installing mods: $MOD_IDS"
+    MODS_DIR="/home/steam/steamcmd/ark/ShooterGame/Content/Mods"
     IFS=',' read -ra MODS <<< "$MOD_IDS"
     for mod in "${MODS[@]}"; do
         mod=$(echo $mod | tr -d ' ')
+        [ -z "$mod" ] && continue
+        if [ -f "${MODS_DIR}/${mod}/mod.info" ] && [ -f "${MODS_DIR}/${mod}.mod" ]; then
+            echo "Mod $mod already installed, skipping download"
+            continue
+        fi
         echo "Installing mod: $mod"
         arkmanager installmod $mod @main
     done
